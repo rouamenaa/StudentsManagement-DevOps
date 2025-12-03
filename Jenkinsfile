@@ -6,9 +6,6 @@ pipeline {
         IMAGE_NAME = "rouamenaa452/monimage"
     }
 
-    triggers {
-        githubPush()   // <-- déclenchement automatique via webhook GitHub
-    }
 
     stages {
 
