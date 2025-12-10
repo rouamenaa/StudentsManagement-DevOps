@@ -48,7 +48,7 @@ pipeline {
 
         stage('Docker Login & Push') {
             steps {
-                echo "📤 Push Docker Hub..."
+                echo "📤   Push Docker Hub..."
                 withCredentials([usernamePassword(
                     credentialsId: 'dockercredentials',
                     usernameVariable: 'DOCKER_USER',
