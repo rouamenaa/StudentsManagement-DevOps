@@ -24,6 +24,7 @@ pipeline {
 
         stage('MVN SONARQUBE') {
             steps {
+                echo "🔍 Lancement analyse SonarQube..."
                 sh "mvn sonar:sonar"
             }
         }
