@@ -6,7 +6,6 @@ pipeline {
         IMAGE_NAME = "rouamenaa452/monimage"
     }
 
-
     stages {
 
         stage('Checkout') {
@@ -20,6 +19,13 @@ pipeline {
             steps {
                 echo "🧹 Nettoyage + compilation..."
                 sh "mvn clean package -DskipTests"
+            }
+        }
+
+        stage('MVN SONARQUBE') {
+            steps {
+                echo "🔍 Lancement analyse SonarQube..."
+                sh "mvn sonar:sonar"
             }
         }
 
