@@ -10,7 +10,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo "📥 Récupération du dernier commit depuis GitHub..."
+                echo "📥 R   écupération du dernier commit depuis GitHub..."
                 checkout scm
             }
         }
