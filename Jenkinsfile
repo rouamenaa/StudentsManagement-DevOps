@@ -4,9 +4,6 @@ pipeline {
     environment {
         REGISTRY = "docker.io"
         IMAGE_NAME = "rouamenaa452/monimage"
-        SONAR_HOST_URL = "http://192.168.33.10:9000"
-        SONAR_LOGIN = "admin"
-        SONAR_PASSWORD = "Rourou1818??" 
     }
 
     stages {
@@ -27,14 +24,7 @@ pipeline {
 
         stage('MVN SONARQUBE') {
             steps {
-                echo "🔍 Lancement analyse SonarQube..."
-                sh """
-                    mvn sonar:sonar \
-                        -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                        -Dsonar.host.url=${SONAR_HOST_URL} \
-                        -Dsonar.login=${SONAR_LOGIN} \
-                        -Dsonar.password=${SONAR_PASSWORD}
-                """
+                sh "mvn sonar:sonar"
             }
         }
 
@@ -47,7 +37,7 @@ pipeline {
 
         stage('Docker Login & Push') {
             steps {
-                echo "📤   Push Docker Hub..."
+                echo "📤 Push Docker Hub..."
                 withCredentials([usernamePassword(
                     credentialsId: 'dockercredentials',
                     usernameVariable: 'DOCKER_USER',
