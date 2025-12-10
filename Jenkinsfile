@@ -6,8 +6,7 @@ pipeline {
         IMAGE_NAME = "rouamenaa452/monimage"
         SONAR_HOST_URL = "http://192.168.33.10:9000"
         SONAR_LOGIN = "admin"
-        SONAR_PASSWORD = "sonar" // ou ton mot de passe changé
-        SONAR_PROJECT_KEY = "student-management"
+        SONAR_PASSWORD = "Rourou1818??" 
     }
 
     stages {
