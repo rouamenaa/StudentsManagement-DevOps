@@ -1,35 +1,77 @@
 package tn.esprit.studentmanagement.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.studentmanagement.entities.Department;
 import tn.esprit.studentmanagement.repositories.DepartmentRepository;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-@Service
+import static org.junit.jupiter.api.Assertions.*;
 
-public class DepartmentService implements IDepartmentService {
-    @Autowired
-    DepartmentRepository departmentRepository;
+@ExtendWith(MockitoExtension.class)
+class DepartmentServiceTest {
 
-    @Override
-    public List<Department> getAllDepartments() {
-        return departmentRepository.findAll();
+    @Mock
+    private DepartmentRepository departmentRepository;
+
+    @InjectMocks
+    private DepartmentService departmentService;
+
+    // 🔹 Test getAllDepartments()
+    @Test
+    void testGetAllDepartments() {
+        List<Department> mockDepartments = Arrays.asList(
+                new Department(1L, "Informatique"),
+                new Department(2L, "Finance")
+        );
+
+        Mockito.when(departmentRepository.findAll()).thenReturn(mockDepartments);
+
+        List<Department> result = departmentService.getAllDepartments();
+
+        assertEquals(2, result.size());
+        assertEquals("Informatique", result.get(0).getName());
     }
 
-    @Override
-    public Department getDepartmentById(Long idDepartment) {
-        return departmentRepository.findById(idDepartment).get();
+    // 🔹 Test getDepartmentById()
+    @Test
+    void testGetDepartmentById() {
+        Department d = new Department(1L, "Informatique");
+
+        Mockito.when(departmentRepository.findById(1L)).thenReturn(Optional.of(d));
+
+        Department result = departmentService.getDepartmentById(1L);
+
+        assertNotNull(result);
+        assertEquals("Informatique", result.getName());
     }
 
-    @Override
-    public Department saveDepartment(Department department) {
-        return departmentRepository.save(department);
+    // 🔹 Test saveDepartment()
+    @Test
+    void testSaveDepartment() {
+        Department d = new Department(1L, "Informatique");
+
+        Mockito.when(departmentRepository.save(d)).thenReturn(d);
+
+        Department result = departmentService.saveDepartment(d);
+
+        assertEquals("Informatique", result.getName());
     }
 
-    @Override
-    public void deleteDepartment(Long idDepartment) {
-departmentRepository.deleteById(idDepartment);
+    // 🔹 Test deleteDepartment()
+    @Test
+    void testDeleteDepartment() {
+        Long id = 1L;
+
+        departmentService.deleteDepartment(id);
+
+        Mockito.verify(departmentRepository, Mockito.times(1)).deleteById(id);
     }
 }
