@@ -28,31 +28,37 @@ class DepartmentServiceTest {
     @Test
     void testGetAllDepartments() {
         Department d1 = new Department();
-        d1.setId(1L);
         d1.setName("Informatique");
+        d1.setLocation("Bureau 101");
+        d1.setPhone("123456");
+        d1.setHead("Dr. Benna");
 
         Department d2 = new Department();
-        d2.setId(2L);
         d2.setName("Finance");
+        d2.setLocation("Bureau 102");
+        d2.setPhone("654321");
+        d2.setHead("Dr. Smith");
 
         List<Department> mockDepartments = Arrays.asList(d1, d2);
-
         Mockito.when(departmentRepository.findAll()).thenReturn(mockDepartments);
 
         List<Department> result = departmentService.getAllDepartments();
 
         assertEquals(2, result.size());
         assertEquals("Informatique", result.get(0).getName());
+        assertEquals("Finance", result.get(1).getName());
     }
 
     // 🔹 Test getDepartmentById()
     @Test
     void testGetDepartmentById() {
         Department d = new Department();
-        d.setId(1L);
         d.setName("Informatique");
+        d.setLocation("Bureau 101");
+        d.setPhone("123456");
+        d.setHead("Dr. Benna");
 
-        Mockito.when(departmentRepository.findById(1L)).thenReturn(Optional.of(d));
+        Mockito.when(departmentRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(d));
 
         Department result = departmentService.getDepartmentById(1L);
 
@@ -64,14 +70,17 @@ class DepartmentServiceTest {
     @Test
     void testSaveDepartment() {
         Department d = new Department();
-        d.setId(1L);
         d.setName("Informatique");
+        d.setLocation("Bureau 101");
+        d.setPhone("123456");
+        d.setHead("Dr. Benna");
 
         Mockito.when(departmentRepository.save(d)).thenReturn(d);
 
         Department result = departmentService.saveDepartment(d);
 
         assertEquals("Informatique", result.getName());
+        assertEquals("Bureau 101", result.getLocation());
     }
 
     // 🔹 Test deleteDepartment()
