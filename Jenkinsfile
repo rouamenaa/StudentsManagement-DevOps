@@ -23,12 +23,19 @@ pipeline {
         }
 
         stage('MVN SONARQUBE') {
-           steps {
-              withSonarQubeEnv('sonarqube') {
-                sh 'mvn -DskipTests clean verify sonar:sonar'
-               }
+    steps {
+        withSonarQubeEnv('sonarqube') {
+            withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                sh """
+                    mvn clean verify sonar:sonar \
+                        -DskipTests \
+                        -Dsonar.token=$SONAR_TOKEN
+                """
             }
-          }
+        }
+    }
+}
+
 
 
         stage('Docker Build') {
