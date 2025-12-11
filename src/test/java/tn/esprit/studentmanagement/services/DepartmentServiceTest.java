@@ -27,10 +27,15 @@ class DepartmentServiceTest {
     // 🔹 Test getAllDepartments()
     @Test
     void testGetAllDepartments() {
-        List<Department> mockDepartments = Arrays.asList(
-                new Department(1L, "Informatique"),
-                new Department(2L, "Finance")
-        );
+        Department d1 = new Department();
+        d1.setId(1L);
+        d1.setName("Informatique");
+
+        Department d2 = new Department();
+        d2.setId(2L);
+        d2.setName("Finance");
+
+        List<Department> mockDepartments = Arrays.asList(d1, d2);
 
         Mockito.when(departmentRepository.findAll()).thenReturn(mockDepartments);
 
@@ -43,7 +48,9 @@ class DepartmentServiceTest {
     // 🔹 Test getDepartmentById()
     @Test
     void testGetDepartmentById() {
-        Department d = new Department(1L, "Informatique");
+        Department d = new Department();
+        d.setId(1L);
+        d.setName("Informatique");
 
         Mockito.when(departmentRepository.findById(1L)).thenReturn(Optional.of(d));
 
@@ -56,7 +63,9 @@ class DepartmentServiceTest {
     // 🔹 Test saveDepartment()
     @Test
     void testSaveDepartment() {
-        Department d = new Department(1L, "Informatique");
+        Department d = new Department();
+        d.setId(1L);
+        d.setName("Informatique");
 
         Mockito.when(departmentRepository.save(d)).thenReturn(d);
 
